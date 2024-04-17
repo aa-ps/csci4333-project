@@ -26,7 +26,7 @@ cur.execute(CREATE_TABLE)
 with open("no_town.csv", "r") as file:
     reader = csv.reader(file)
     next(reader)
-    data = [tuple(row) for row in reader]
+    data = [tuple(item.replace(" ", "").replace("'", "") for item in row) for row in reader]
     cur.executemany("INSERT INTO no_town VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", data)
     con.commit()
 
