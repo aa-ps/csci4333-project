@@ -5,7 +5,7 @@ con = sqlite3.connect("original_db.db")
 
 cur = con.cursor()
 
-QUERY_ONE = """SELECT name, ssn FROM no_town"""
+QUERY_ONE = """SELECT name, ssn FROM musician"""
 
 res = cur.execute(QUERY_ONE)
 
@@ -17,7 +17,7 @@ print(tabulate(rows, headers=relational_schema))
 
 print(len(rows))
 
-QUERY_TWO = """SELECT name, ssn FROM no_town"""
+QUERY_TWO = """SELECT title, id FROM album"""
 
 res = cur.execute(QUERY_TWO)
 
@@ -29,7 +29,7 @@ print(tabulate(rows, headers=relational_schema))
 
 print(len(rows))
 
-QUERY_THREE = """SELECT name, ssn FROM no_town"""
+QUERY_THREE = """SELECT name, key, id FROM instrument"""
 
 res = cur.execute(QUERY_THREE)
 
@@ -41,16 +41,16 @@ print(tabulate(rows, headers=relational_schema))
 
 print(len(rows))
 
-QUERY_FOUR = """SELECT name, ssn FROM no_town"""
+# QUERY_FOUR = """SELECT name, ssn FROM no_town"""
 
-res = cur.execute(QUERY_FOUR)
+# res = cur.execute(QUERY_FOUR)
 
-rows = res.fetchall()
+# rows = res.fetchall()
 
-relational_schema = [x[0] for x in res.description]
+# relational_schema = [x[0] for x in res.description]
 
-print(tabulate(rows, headers=relational_schema))
+# print(tabulate(rows, headers=relational_schema))
 
-print(len(rows))
+# print(len(rows))
 
 con.close()

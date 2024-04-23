@@ -28,12 +28,16 @@ with open("no_town.csv", "r") as file:
     next(reader)
     data = [tuple(item.replace(" ", "").replace("'", "") for item in row) for row in reader]
     cur.executemany("INSERT INTO no_town VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", data)
-    con.commit()
 
-TEST = '''SELECT * FROM no_town WHERE date=2010'''
+
+con.commit()
+
+TEST = '''SELECT * FROM no_town'''
 
 res = cur.execute(TEST)
 
 relational_schema = [x[0] for x in res.description]
 
 print(tabulate(res, headers=relational_schema))
+
+con.close()
