@@ -1,12 +1,17 @@
 import sqlite3
 
 
+# This function runs the query to populate the small table we created from task2.
+# cur - cursor to the new_db.db
+# table - table from the new_db.db we want to insert
+# query - the query we want to execute in the original_db.db
+# original_db_cur - cursor to the big table in original_db.db
 def insert_into_table(cur, table, query, original_db_cur):
     original_db_cur.execute(query)
     rows = original_db_cur.fetchall()
     for row in rows:
         placeholders = ', '.join('?' * len(row))
-        cur.execute(f"INSERT OR IGNORE INTO {table} VALUES ({placeholders})", row)
+        cur.execute(f"INSERT OR IGNORE INTO {table} VALUES ({placeholders})", row) # This will look like: 'INSERT OR IGNORE INTO musician VALUES (?,?,?,?,?), row_data'
 
 
 with sqlite3.connect("new_db.db") as new_db_con:
@@ -15,6 +20,7 @@ with sqlite3.connect("new_db.db") as new_db_con:
     with sqlite3.connect("original_db.db") as original_db_con:
         original_db_cur = original_db_con.cursor()
 
+        # For each table, we are stripping specific data we need from the big table. 
         musician_query = """
         SELECT DISTINCT musician_ssn, musician_name, street_number, street_name, street_type
         FROM no_town

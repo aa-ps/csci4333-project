@@ -1,6 +1,8 @@
 import sqlite3
-from tabulate import tabulate
+from tabulate import tabulate # I use tabulate to make the output easier to read. To install, run 'pip install tabulate' on the terminal to install the library.
 
+# This function executes the query on the new_db.db and outputs the results with its count.
+# Uses tabulate to format the output.
 def execute_and_print_query(cur, query):
     res = cur.execute(query)
     rows = res.fetchall()
@@ -11,6 +13,7 @@ def execute_and_print_query(cur, query):
 with sqlite3.connect("new_db.db") as con:
     cur = con.cursor()
 
+    # Queries needed to get the information required for the summary.
     musician_query = "SELECT musician_name, musician_ssn FROM musician;"
     album_query = "SELECT album_title, album_id FROM album;"
     instrument_query = "SELECT instrument_name, instrument_key, instrument_id FROM instrument;"
@@ -21,6 +24,7 @@ with sqlite3.connect("new_db.db") as con:
     GROUP BY m.musician_ssn;
     """
 
+    # Execute each query and print its result.
     print("Musicians:")
     execute_and_print_query(cur, musician_query)
 

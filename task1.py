@@ -1,6 +1,8 @@
 import sqlite3
 import csv
 
+# Here we are using csv to read the file and create a large table with all the data from it.
+
 with sqlite3.connect("original_db.db") as con:
     cur = con.cursor()
 
@@ -26,13 +28,15 @@ with sqlite3.connect("original_db.db") as con:
             reader = csv.reader(file)
             next(reader)
         
+            # These are placeholders for our attributes, so we don't have to put the column names.
             insert_query = "INSERT INTO no_town VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
             
             data = [tuple(row) for row in reader]
             cur.executemany(insert_query, data)
 
     # To verify the data was transferred correctly.
-
+    # Uncomment if needed.
+    
     # TEST_QUERY = 'SELECT * FROM no_town'
 
     # res = cur.execute(TEST_QUERY).fetchall()

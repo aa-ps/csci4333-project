@@ -1,8 +1,12 @@
 import sqlite3
 
+# Here we create the small tables from the big table we created on task1.
+
 with sqlite3.connect("new_db.db") as con:
     cur = con.cursor()
     
+    # I decided to be more verbose with the attribute names to make it easier which attributes we are accessing.
+
     CREATE_STATEMENTS = """
     CREATE TABLE IF NOT EXISTS musician(
         musician_ssn TEXT,
