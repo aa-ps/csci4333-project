@@ -17,7 +17,7 @@ with sqlite3.connect("new_db.db") as con:
     album_count_by_musician_query = """
     SELECT m.*, COUNT(p.album_id) AS album_count
     FROM musician m
-    LEFT JOIN produced p ON m.musician_ssn = p.musician_ssn 
+    JOIN produced p ON m.musician_ssn = p.musician_ssn 
     GROUP BY m.musician_ssn;
     """
 

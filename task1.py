@@ -1,6 +1,5 @@
 import sqlite3
 import csv
-from tabulate import tabulate
 
 with sqlite3.connect("original_db.db") as con:
     cur = con.cursor()
@@ -32,12 +31,14 @@ with sqlite3.connect("original_db.db") as con:
             data = [tuple(row) for row in reader]
             cur.executemany(insert_query, data)
 
-    TEST_QUERY = 'SELECT * FROM no_town'
+    # To verify the data was transferred correctly.
 
-    res = cur.execute(TEST_QUERY).fetchall()
+    # TEST_QUERY = 'SELECT * FROM no_town'
 
-    if res:
-        relational_schema = [x[0] for x in cur.description]
-        print(tabulate(res, headers=relational_schema))
-    else:
-        print("No data available.")
+    # res = cur.execute(TEST_QUERY).fetchall()
+
+    # if res:
+    #     relational_schema = [x[0] for x in cur.description]
+    #     print(tabulate(res, headers=relational_schema))
+    # else:
+    #     print("No data available.")
