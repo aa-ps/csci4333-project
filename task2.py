@@ -1,66 +1,49 @@
 import sqlite3
-from tabulate import tabulate
 
-with sqlite3.connect("original_db.db") as con:
+with sqlite3.connect("new_db.db") as con:
     cur = con.cursor()
     
     CREATE_STATEMENTS = """
     CREATE TABLE IF NOT EXISTS musician(
-        ssn TEXT,
-        name TEXT,
+        musician_ssn TEXT,
+        musician_name TEXT,
         street_number TEXT,
         street_name TEXT,
         street_type TEXT,
-        PRIMARY KEY(ssn)
+        PRIMARY KEY(musician_ssn)
     );
     
     CREATE TABLE IF NOT EXISTS instrument(
-        id TEXT,
-        name TEXT,
-        key TEXT,
-        PRIMARY KEY(id)
+        instrument_id TEXT,
+        instrument_name TEXT,
+        instrument_key TEXT,
+        PRIMARY KEY(instrument_id)
     );
     
     CREATE TABLE IF NOT EXISTS album(
-        id TEXT,
-        title TEXT,
-        date INTEGER,
-        format TEXT,
-        PRIMARY KEY(id)
+        album_id TEXT,
+        album_title TEXT,
+        album_date INTEGER,
+        album_format TEXT,
+        PRIMARY KEY(album_id)
     );
     
-    CREATE TABLE IF NOT EXISTS musicalbum(
-        ssn TEXT,
-        id TEXT,
-        PRIMARY KEY(ssn, id),
-        FOREIGN KEY(ssn) REFERENCES musician(ssn),
-        FOREIGN KEY(id) REFERENCES album(id)
+    CREATE TABLE IF NOT EXISTS produced(
+        musician_ssn TEXT,
+        album_id TEXT,
+        PRIMARY KEY(musician_ssn, album_id),
+        FOREIGN KEY(musician_ssn) REFERENCES musician(musician_ssn),
+        FOREIGN KEY(album_id) REFERENCES album(album_id)
     );
     
-    CREATE TABLE IF NOT EXISTS instrumentalbum(
-        albumid TEXT,
-        instrumentid TEXT,
-        ssn TEXT,
-        PRIMARY KEY(albumid, instrumentid, ssn),
-        FOREIGN KEY(albumid) REFERENCES album(id),
-        FOREIGN KEY(instrumentid) REFERENCES instrument(id),
-        FOREIGN KEY(ssn) REFERENCES musician(ssn)
+    CREATE TABLE IF NOT EXISTS used(
+        album_id TEXT,
+        instrument_id TEXT,
+        PRIMARY KEY(album_id, instrument_id),
+        FOREIGN KEY(album_id) REFERENCES album(album_id),
+        FOREIGN KEY(instrument_id) REFERENCES instrument(instrument_id)
     );
     """
     
     cur.executescript(CREATE_STATEMENTS)
     
-    res = cur.execute("SELECT * FROM no_town").fetchall()
-    
-def insert_into_table(cur, table, values):
-    placeholders = ', '.join('?' * len(values))
-    cur.execute(f"INSERT OR IGNORE INTO {table} VALUES ({placeholders})", values)
-    
-with con:
-    for row in res:
-        insert_into_table(cur, "musician", (row[4], row[3], row[0], row[1], row[2]))
-        insert_into_table(cur, "instrument", (row[9], row[10], row[11]))
-        insert_into_table(cur, "album", (row[5], row[6], row[7], row[8]))
-        insert_into_table(cur, "musicalbum", (row[4], row[5]))
-        insert_into_table(cur, "instrumentalbum", (row[5], row[9], row[4]))
-

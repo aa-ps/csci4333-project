@@ -7,18 +7,18 @@ with sqlite3.connect("original_db.db") as con:
 
     with con:
         CREATE_TABLE = '''CREATE TABLE IF NOT EXISTS no_town(
-            num TEXT,
-            street TEXT,
+            street_number TEXT,
+            street_name TEXT,
             street_type TEXT,
-            name TEXT,
-            ssn TEXT,
+            musician_name TEXT,
+            musician_ssn TEXT,
             album_id INTEGER,
-            title TEXT,
-            date INTEGER,
-            album_type TEXT,
+            album_title TEXT,
+            album_date INTEGER,
+            album_format TEXT,
             instrument_id INTEGER,
-            instrument_type TEXT,
-            key TEXT
+            instrument_name TEXT,
+            instrument_key TEXT
         );'''
 
         cur.execute(CREATE_TABLE)
