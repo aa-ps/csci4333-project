@@ -14,14 +14,14 @@ with sqlite3.connect("new_db.db") as con:
     cur = con.cursor()
 
     # Queries needed to get the information required for the summary.
-    musician_query = "SELECT musician_name, musician_ssn FROM musician;"
-    album_query = "SELECT album_title, album_id FROM album;"
-    instrument_query = "SELECT instrument_name, instrument_key, instrument_id FROM instrument;"
+    musician_query = "SELECT name, ssn FROM musician;"
+    album_query = "SELECT title, id FROM album;"
+    instrument_query = "SELECT name, key, id FROM instrument;"
     album_count_by_musician_query = """
-    SELECT m.*, COUNT(p.album_id) AS album_count
+    SELECT m.*, COUNT(p.id) AS album_count
     FROM musician m
-    JOIN produced p ON m.musician_ssn = p.musician_ssn 
-    GROUP BY m.musician_ssn;
+    JOIN produced p ON m.ssn = p.ssn 
+    GROUP BY m.ssn;
     """
 
     # Execute each query and print its result.
