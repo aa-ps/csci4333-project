@@ -6,8 +6,9 @@ with sqlite3.connect("new_db.db") as con:
     cur = con.cursor()
     
     # I decided to be more verbose with the attribute names to make it easier which attributes we are accessing.
-    # UPDATE: Reverted the name to match project instructions.
+    # UPDATE: Reverted the name to match the project.
     
+    # I included "IF NOT EXISTS" in case the table is already created and to avoid errors.
     CREATE_STATEMENTS = """
     CREATE TABLE IF NOT EXISTS musician(
         ssn TEXT,
@@ -28,7 +29,7 @@ with sqlite3.connect("new_db.db") as con:
     CREATE TABLE IF NOT EXISTS album(
         id TEXT,
         title TEXT,
-        date INTEGER,
+        date DATE,
         format TEXT,
         PRIMARY KEY(id)
     );

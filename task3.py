@@ -20,7 +20,8 @@ with sqlite3.connect("new_db.db") as new_db_con:
     with sqlite3.connect("original_db.db") as original_db_con:
         original_db_cur = original_db_con.cursor()
 
-        # For each table, we are stripping specific data we need from the big table. 
+        # For each table, we are stripping specific data we need from the big table.
+        # The columns in no_town (original_db.db) have the same ordering as (new_db.db) so we can just insert it directly. 
         musician_query = """
         SELECT DISTINCT musician_ssn, musician_name, street_number, street_name, street_type
         FROM no_town
